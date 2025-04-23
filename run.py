@@ -75,6 +75,8 @@ def main():
         help='Log file to write output to'
     )
     args = parser.parse_args()
+
+    print("!!! INSIDE THE MAIN FUNCTION !!!")
     
     if args.log is not None:
         setup_log_to_file(args.log)
