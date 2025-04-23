@@ -2,7 +2,7 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "my_first_flux_lora_v1"
+  name: "flux_lora"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
@@ -15,8 +15,9 @@ config:
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
-        linear: 16
-        linear_alpha: 16
+        rank: 128
+        linear: 128
+        linear_alpha: 128
       save:
         dtype: float16 # precision to save
         save_every: 250 # save every this many steps
@@ -31,11 +32,11 @@ config:
         # images will automatically be resized and bucketed into the resolution specified
         # on windows, escape back slashes with another backslash so
         # "C:\\path\\to\\images\\folder"
-        - folder_path: "/path/to/images/folder"
+        - folder_path: "/pvc/MIMIC_ARRANGED2/"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
-          cache_latents_to_disk: true  # leave this true unless you know what you're doing
+          cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # flux enjoys multiple resolutions
       train:
         batch_size: 1
