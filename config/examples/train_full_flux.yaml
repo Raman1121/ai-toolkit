@@ -1,0 +1,80 @@
+---
+job: extension
+config:
+  # this name will be the folder and filename name
+  name: "flux_lora"
+  process:
+    - type: 'sd_trainer'
+      # root folder to save training sessions/samples/weights
+      training_folder: "output_full_ft"
+      # uncomment to see performance stats in the terminal every N steps
+#      performance_log_every: 1000
+      device: cuda:0
+      save:
+        dtype: float16 # precision to save
+        save_every: 1000 # save every this many steps
+        max_step_saves_to_keep: 2 # how many intermittent saves to keep
+        save_format: 'diffusers' # 'diffusers'
+        push_to_hub: false #change this to True to push your trained model to Hugging Face.
+      datasets:
+        - folder_path: "/pvc/MIMIC_ARRANGED2/"
+          caption_ext: "txt"
+          caption_dropout_rate: 0.05  # will drop out the caption 5% of time
+          shuffle_tokens: false  # shuffle caption order, split by commas
+          cache_latents_to_disk: false  # leave this true unless you know what you're doing
+          resolution: [ 512, 768, 1024 ]  # flux enjoys multiple resolutions
+      train:
+        batch_size: 512
+        steps: 9280  # (len(dataset) * epochs) / batch_size  -> Wehave 237388 samples
+        gradient_accumulation_steps: 1
+        train_unet: true
+        train_text_encoder: false  # probably won't work with flux
+        gradient_checkpointing: false  # need the on unless you have a ton of vram
+        noise_scheduler: "flowmatch" # for training only
+        optimizer: "adamw8bit"
+        lr: 1e-4
+        # uncomment this to skip the pre training sample
+        skip_first_sample: true
+        # uncomment to completely disable sampling
+#        disable_sampling: true
+        # uncomment to use new vell curved weighting. Experimental but may produce better results
+#        linear_timesteps: true
+
+        # ema will smooth out learning, but could slow it down. Recommended to leave on.
+        # ema_config:
+        #   use_ema: false
+        #   ema_decay: 0.99
+
+        # will probably need this if gpu supports it for flux, other dtypes may not work correctly
+        dtype: bf16
+      model:
+        # huggingface model name or path
+        name_or_path: "black-forest-labs/FLUX.1-dev"
+        is_flux: true
+        quantize: true  # run 8bit mixed precision
+#        low_vram: true  # uncomment this if the GPU is connected to your monitors. It will use less vram to quantize, but is slower.
+      sample:
+        sampler: "flowmatch" # must match train.noise_scheduler
+        sample_every: 2000 # sample every this many steps
+        width: 512
+        height: 512
+        prompts:
+          - "Nasogastric tube extends to the mid body of the stomach, before coiling on itself so that the tip lies close to the esophagogastric junction. Cardiac silhouette is within normal limits and there is no vascular congestion, pleural effusion, or acute focal pneumonia."
+          - 'PA and lateral views of the chest provided. Lung volumes are low with mild bibasilar atelectasis. No convincing signs of pneumonia or edema. No large effusion or pneumothorax is seen. The cardiomediastinal silhouette appears normal. There is no free air below the right hemidiaphragm. Fluid level is noted within the stomach.'
+          - 'PA and lateral views of the chest provided. Lung volumes are low with mild bibasilar atelectasis. No convincing signs of pneumonia or edema. No large effusion or pneumothorax is seen. The cardiomediastinal silhouette appears normal. There is no free air below the right hemidiaphragm. Fluid level is noted within the stomach.'
+          - 'Heart size top-normal. Lungs grossly clear. No pleural abnormality or evidence of central lymph node enlargement.'
+          - 'The right costophrenic angle is not imaged. Otherwise, the lungs are clear. The heart size is upper limits of normal. Enteric tube courses below the level of the diaphragm. There is no pneumothorax.'
+          - 'Single frontal view of the chest. NG tube is coiled in the stomach. Right PICC in lower SVC is unchanged in position. Cardiac size is normal. Mild bibasilar opacities consistent with atelectasis. There is no pneumothorax or pleural effusion.'
+          - 'AP upright and lateral views of the chest provided. Mild basal atelectasis noted. Hilar congestion noted without frank edema. No large effusion or pneumothorax. Heart size is normal. Mediastinal contour is unchanged. Bony structures are intact. No free air below the right hemidiaphragm.'
+          - 'No focal consolidation, pleural effusion, pneumothorax, or pulmonary edema is detected. Heart and mediastinal contours are within normal limits. Aortic arch calcifications are seen.'
+          - 'Lung volumes are slightly low. This accentuates the size of the cardiac silhouette which is likely top normal. Mediastinal and hilar contours are unremarkable. Pulmonary vasculature is normal. No focal consolidation, pleural effusion or pneumothorax is present. There are mild degenerative changes in the thoracic spine.'
+          - 'The lungs are clear without focal consolidation. No pleural effusion or pneumothorax is seen. The cardiac and mediastinal silhouettes are unremarkable.'
+        neg: ""  # not used on flux
+        seed: 42
+        walk_seed: true
+        guidance_scale: 4
+        sample_steps: 20
+# you can add any additional meta info here. [name] is replaced with config name at top
+meta:
+  name: "[name]"
+  version: '1.0'
