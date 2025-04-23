@@ -3,7 +3,7 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "sd3-5_lora"
+  name: "sd3-5_full_finetune"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights

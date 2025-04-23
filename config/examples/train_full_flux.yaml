@@ -2,7 +2,7 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "flux_lora"
+  name: "flux_full_finetune"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
