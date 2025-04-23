@@ -3,36 +3,25 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "my_first_sd3l_lora_v1"
+  name: "sd3-5_lora"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
       training_folder: "output"
-      # uncomment to see performance stats in the terminal every N steps
-#      performance_log_every: 1000
       device: cuda:0
-      # if a trigger word is specified, it will be added to captions of training data if it does not already exist
-      # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
-        linear: 16
-        linear_alpha: 16
+        rank: 128
+        linear: 128
+        linear_alpha: 128
       save:
         dtype: float16 # precision to save
         save_every: 250 # save every this many steps
         max_step_saves_to_keep: 4 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
-        # You can either set up a HF_TOKEN env variable or you'll be prompted to log-in         
-#       hf_repo_id: your-username/your-model-slug
-#       hf_private: true #whether the repo is private or public
       datasets:
-        # datasets are a folder of images. captions need to be txt files with the same name as the image
-        # for instance image2.jpg and image2.txt. Only jpg, jpeg, and png are supported currently
-        # images will automatically be resized and bucketed into the resolution specified
-        # on windows, escape back slashes with another backslash so
-        # "C:\\path\\to\\images\\folder"
-        - folder_path: "/path/to/images/folder"
+        - folder_path: "/pvc/MIMIC_ARRANGED2/"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
