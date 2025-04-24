@@ -645,6 +645,9 @@ def get_dataloader_from_datasets(
         dataloader_kwargs['num_workers'] = dataset_config_list[0].num_workers
         dataloader_kwargs['prefetch_factor'] = dataset_config_list[0].prefetch_factor
 
+    print("###################################")
+    print("##### NUM WORKERS: ", dataloader_kwargs['num_workers'])
+
     if has_buckets:
         # make sure they all have buckets
         for dataset in datasets:
