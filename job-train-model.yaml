@@ -113,7 +113,7 @@ spec:
               accelerate launch --num_processes=8 run.py config/examples/train_lora_sd35_medium.yaml > log_training.txt 2>&1
           resources:
             limits:
-              nvidia.com/gpu: "8"
+              nvidia.com/gpu: "6"
               cpu: "8"
               memory: "128Gi"
           volumeMounts:
