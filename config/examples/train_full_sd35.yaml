@@ -23,7 +23,7 @@ config:
           cache_latents_to_disk: true  # leave this true unless you know what you're doing
           resolution: [ 1024 ] 
       train:
-        batch_size: 512
+        batch_size: 256
         steps: 9280  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 1
         train_unet: true
