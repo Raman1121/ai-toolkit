@@ -644,6 +644,9 @@ def get_dataloader_from_datasets(
     else:
         dataloader_kwargs['num_workers'] = dataset_config_list[0].num_workers
         dataloader_kwargs['prefetch_factor'] = dataset_config_list[0].prefetch_factor
+    
+    # Manually setting dataloaders to 4
+    dataloader_kwargs['num_workers'] = 4
 
     print("###################################")
     print("##### NUM WORKERS: ", dataloader_kwargs['num_workers'])
