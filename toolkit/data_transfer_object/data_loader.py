@@ -6,9 +6,9 @@ import cv2
 import torch
 import random
 
-from PIL import Image
+from PIL import Image, ImageFile
 from PIL.ImageOps import exif_transpose
-
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 from toolkit import image_utils
 from toolkit.basic import get_quick_signature_string
 from toolkit.dataloader_mixins import CaptionProcessingDTOMixin, ImageProcessingDTOMixin, LatentCachingFileItemDTOMixin, \
