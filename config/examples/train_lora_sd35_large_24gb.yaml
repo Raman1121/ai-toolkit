@@ -21,7 +21,7 @@ config:
         max_step_saves_to_keep: 2 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
       datasets:
-        - folder_path: "/pvc/MIMIC_ARRANGED/Train/"
+        - folder_path: "/pvc/MIMIC_ARRANGED2/"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
