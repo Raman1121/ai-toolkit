@@ -107,7 +107,7 @@ spec:
               ./scripts/hf-login.sh
 
               echo "Starting Training ..."
-              python run.py config/examples/train_full_sd35.yaml > log_training.txt 2>&1
+              python run.py config/examples/train_lora_sd35_large_24gb.yaml > log_training.txt 2>&1
 
           resources:
             limits:
