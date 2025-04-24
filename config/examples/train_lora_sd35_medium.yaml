@@ -18,10 +18,10 @@ config:
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
-        max_step_saves_to_keep: 2 # how many intermittent saves to keep
+        max_step_saves_to_keep: 1 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
       datasets:
-        - folder_path: "/pvc/MIMIC_ARRANGED2/"
+        - folder_path: "/pvc/MIMIC_ARRANGED/Train"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
@@ -29,7 +29,7 @@ config:
           resolution: [ 1024 ] 
       train:
         batch_size: 64
-        steps: 9280  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        steps: 9000  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # May not fully work with SD3 yet
