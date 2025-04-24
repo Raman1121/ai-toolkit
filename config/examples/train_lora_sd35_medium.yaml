@@ -8,7 +8,8 @@ config:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
       training_folder: "output"
-      device: cuda:0
+      # device: cuda:0
+      device: cuda
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
