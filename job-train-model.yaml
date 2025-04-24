@@ -113,7 +113,7 @@ spec:
               accelerate launch --num_processes=6 run.py config/examples/train_lora_lumina.yaml > log_training_lumina.txt 2>&1
           resources:
             limits:
-              nvidia.com/gpu: "6"
+              nvidia.com/gpu: "4"
               cpu: "8"
               memory: "128Gi"
           volumeMounts:
