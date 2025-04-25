@@ -32,7 +32,7 @@ config:
           # cache_latents_to_disk: true  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # lumina2 enjoys multiple resolutions
       train:
-        batch_size: 16
+        batch_size: 32
 
         # can be 'sigmoid', 'linear', or 'lumina2_shift'
         timestep_type: 'lumina2_shift' 
@@ -52,7 +52,7 @@ config:
 
         # ema will smooth out learning, but could slow it down. Recommended to leave on if you have the vram
         ema_config:
-          use_ema: true
+          use_ema: false
           ema_decay: 0.99
 
         # will probably need this if gpu supports it for lumina2, other dtypes may not work correctly
