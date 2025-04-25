@@ -76,7 +76,7 @@ def main():
     )
     args = parser.parse_args()
 
-    print("!!! INSIDE THE MAIN FUNCTION !!!")
+    print("!!!INSIDE THE MAIN FUNCTION !!!")
     
     if args.log is not None:
         setup_log_to_file(args.log)

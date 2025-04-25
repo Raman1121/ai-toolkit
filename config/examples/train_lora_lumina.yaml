@@ -3,45 +3,41 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "my_first_lumina_lora_v1"
+  name: "lumina2_lora"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
       training_folder: "output"
       # uncomment to see performance stats in the terminal every N steps
-      # performance_log_every: 1000
-      device: cuda:0
+      performance_log_every: 500
+      device: cuda
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
       # trigger_word: "p3r5on"
       network:
         type: "lora"
-        linear: 16
-        linear_alpha: 16
+        rank: 32
+        linear: 32
+        linear_alpha: 64 # Keeping alpha larger than rank increases the effect of LoRA
       save:
         dtype: bf16 # precision to save
-        save_every: 250 # save every this many steps
-        max_step_saves_to_keep: 2 # how many intermittent saves to keep
+        save_every: 1000 # save every this many steps
+        max_step_saves_to_keep: 1 # how many intermittent saves to keep
         save_format: 'diffusers' # 'diffusers'
       datasets:
-        # datasets are a folder of images. captions need to be txt files with the same name as the image
-        # for instance image2.jpg and image2.txt. Only jpg, jpeg, and png are supported currently
-        # images will automatically be resized and bucketed into the resolution specified
-        # on windows, escape back slashes with another backslash so
-        # "C:\\path\\to\\images\\folder"
-        - folder_path: "/path/to/images/folder"
+        - folder_path: "/pvc/MIMIC_ARRANGED/Train"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
           # cache_latents_to_disk: true  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # lumina2 enjoys multiple resolutions
       train:
-        batch_size: 1
+        batch_size: 32
 
         # can be 'sigmoid', 'linear', or 'lumina2_shift'
         timestep_type: 'lumina2_shift' 
         
-        steps: 2000  # total number of steps to train 500 - 4000 is a good range
+        steps: 9000  # total number of steps to train 500 - 4000 is a good range
         gradient_accumulation: 1
         train_unet: true
         train_text_encoder: false  # probably won't work with lumina2
@@ -50,7 +46,7 @@ config:
         optimizer: "adamw8bit"
         lr: 1e-4
         # uncomment this to skip the pre training sample
-        # skip_first_sample: true
+        skip_first_sample: true
         # uncomment to completely disable sampling
         # disable_sampling: true
 
@@ -73,18 +69,16 @@ config:
         width: 1024
         height: 1024
         prompts:
-          # you can add [trigger] to the prompts here and it will be replaced with the trigger word
-          # - "[trigger] holding a sign that says 'I LOVE PROMPTS!'"\
-          - "woman with red hair, playing chess at the park, bomb going off in the background"
-          - "a woman holding a coffee cup, in a beanie, sitting at a cafe"
-          - "a horse is a DJ at a night club, fish eye lens, smoke machine, lazer lights, holding a martini"
-          - "a man showing off his cool new t shirt at the beach, a shark is jumping out of the water in the background"
-          - "a bear building a log cabin in the snow covered mountains"
-          - "woman playing the guitar, on stage, singing a song, laser lights, punk rocker"
-          - "hipster man with a beard, building a chair, in a wood shop"
-          - "photo of a cat that is half black and half orange tabby, split down the middle. The cat has on a blue tophat. They are holding a martini glass with a pink ball of yarn in it with green knitting needles sticking out, in one paw. In the other paw, they are holding a DVD case for a movie titled, \"This is a test\" that has a golden robot on it. In the background is a busy night club with a giant mushroom man dancing with a bear."
-          - "a man holding a sign that says, 'this is a sign'"
-          - "a bulldog, in a post apocalyptic world, with a shotgun, in a leather jacket, in a desert, with a motorcycle"
+          - "Nasogastric tube extends to the mid body of the stomach, before coiling on itself so that the tip lies close to the esophagogastric junction. Cardiac silhouette is within normal limits and there is no vascular congestion, pleural effusion, or acute focal pneumonia."
+          - 'PA and lateral views of the chest provided. Lung volumes are low with mild bibasilar atelectasis. No convincing signs of pneumonia or edema. No large effusion or pneumothorax is seen. The cardiomediastinal silhouette appears normal. There is no free air below the right hemidiaphragm. Fluid level is noted within the stomach.'
+          - 'PA and lateral views of the chest provided. Lung volumes are low with mild bibasilar atelectasis. No convincing signs of pneumonia or edema. No large effusion or pneumothorax is seen. The cardiomediastinal silhouette appears normal. There is no free air below the right hemidiaphragm. Fluid level is noted within the stomach.'
+          - 'Heart size top-normal. Lungs grossly clear. No pleural abnormality or evidence of central lymph node enlargement.'
+          - 'The right costophrenic angle is not imaged. Otherwise, the lungs are clear. The heart size is upper limits of normal. Enteric tube courses below the level of the diaphragm. There is no pneumothorax.'
+          - 'Single frontal view of the chest. NG tube is coiled in the stomach. Right PICC in lower SVC is unchanged in position. Cardiac size is normal. Mild bibasilar opacities consistent with atelectasis. There is no pneumothorax or pleural effusion.'
+          - 'AP upright and lateral views of the chest provided. Mild basal atelectasis noted. Hilar congestion noted without frank edema. No large effusion or pneumothorax. Heart size is normal. Mediastinal contour is unchanged. Bony structures are intact. No free air below the right hemidiaphragm.'
+          - 'No focal consolidation, pleural effusion, pneumothorax, or pulmonary edema is detected. Heart and mediastinal contours are within normal limits. Aortic arch calcifications are seen.'
+          - 'Lung volumes are slightly low. This accentuates the size of the cardiac silhouette which is likely top normal. Mediastinal and hilar contours are unremarkable. Pulmonary vasculature is normal. No focal consolidation, pleural effusion or pneumothorax is present. There are mild degenerative changes in the thoracic spine.'
+          - 'The lungs are clear without focal consolidation. No pleural effusion or pneumothorax is seen. The cardiac and mediastinal silhouettes are unremarkable.'
         neg: ""
         seed: 42
         walk_seed: true
