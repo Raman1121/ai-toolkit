@@ -32,13 +32,13 @@ config:
           # cache_latents_to_disk: true  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # lumina2 enjoys multiple resolutions
       train:
-        batch_size: 32
+        batch_size: 16
 
         # can be 'sigmoid', 'linear', or 'lumina2_shift'
         timestep_type: 'lumina2_shift' 
         
         steps: 9000  # total number of steps to train 500 - 4000 is a good range
-        gradient_accumulation: 1
+        gradient_accumulation: 2
         train_unet: true
         train_text_encoder: false  # probably won't work with lumina2
         gradient_checkpointing: true  # need the on unless you have a ton of vram
