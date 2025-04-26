@@ -30,7 +30,7 @@ config:
           resolution: [ 1024 ] 
       train:
         batch_size: 32
-        steps: 9000  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        steps: 18545  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # May not fully work with SD3 yet
