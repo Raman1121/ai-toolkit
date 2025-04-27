@@ -113,8 +113,8 @@ spec:
               ./scripts/hf-login.sh
 
               echo "Starting Training ..."
-              accelerate launch --num_processes=4 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3-5.txt 2>&1
-              # accelerate launch --num_processes=4 run.py config/examples/train_lora_lumina.yaml > log_training_lumina.txt 2>&1
+              # accelerate launch --num_processes=4 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3-5.txt 2>&1
+              accelerate launch --num_processes=4 run.py config/examples/train_lora_lumina.yaml > log_training_lumina.txt 2>&1
               # accelerate launch --num_processes=4 run.py config/examples/train_lora_flux_24gb.yaml > log_training_flux.txt 2>&1
               
           resources:

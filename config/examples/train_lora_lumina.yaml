@@ -37,7 +37,7 @@ config:
         # can be 'sigmoid', 'linear', or 'lumina2_shift'
         timestep_type: 'lumina2_shift' 
         
-        steps: 15000  # total number of steps to train 500 - 4000 is a good range
+        steps: 28505  # total number of steps to train 500 - 4000 is a good range -> Corresponding to 15 epochs (approx)
         gradient_accumulation: 2
         train_unet: true
         train_text_encoder: false  # probably won't work with lumina2
