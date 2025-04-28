@@ -9,7 +9,7 @@ config:
       training_folder: "output"
       # uncomment to see performance stats in the terminal every N steps
       performance_log_every: 1000
-      device: cuda
+      device: cuda:0
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
 #      trigger_word: "p3r5on"
@@ -28,11 +28,11 @@ config:
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
-          cache_latents_to_disk: true  # leave this true unless you know what you're doing
+          cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # flux enjoys multiple resolutions
       train:
         batch_size: 16
-        steps: 15000  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        steps: 28505  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 2
         train_unet: true
         train_text_encoder: false  # probably won't work with flux
