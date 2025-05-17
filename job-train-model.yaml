@@ -115,7 +115,7 @@ spec:
               echo "Starting Training ..."
               # accelerate launch --num_processes=4 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3-5.txt 2>&1
               # accelerate launch --num_processes=4 run.py config/examples/train_lora_lumina.yaml > log_training_lumina.txt 2>&1
-              accelerate launch run.py config/examples/train_full_sd35_medium.yaml --deepspeed_config_file zero2.json > log_training_sd3_full.txt 2>&1
+              accelerate launch --num_processes=4 run.py config/examples/train_full_sd35_medium.yaml --deepspeed_config_file zero2.json > log_training_sd3_full.txt 2>&1
               
           resources:
             limits:
