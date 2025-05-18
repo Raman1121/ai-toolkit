@@ -306,8 +306,7 @@ class LoRASpecialNetwork(ToolkitNetworkMixin, LoRANetwork):
             skipped = []
             attached_modules = []
             lora_shape_dict = {}
-            print("TARGET MODULES")
-            print(target_replace_modules)
+
             for name, module in root_module.named_modules():
                 if module.__class__.__name__ in target_replace_modules:
                     for child_name, child_module in module.named_modules():
@@ -487,6 +486,7 @@ class LoRASpecialNetwork(ToolkitNetworkMixin, LoRANetwork):
             self.unet_loras = []
             skipped_un = []
         print(f"create LoRA for U-Net: {len(self.unet_loras)} modules.")
+        print(f"{self.unet_loras}")
 
         skipped = skipped_te + skipped_un
         if varbose and len(skipped) > 0:
