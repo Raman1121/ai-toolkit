@@ -230,6 +230,8 @@ class InstantLoRAModule(torch.nn.Module):
         self.ilora_modules = torch.nn.ModuleList()
 
         lora_modules = self.sd_ref().network.get_all_modules()
+        print("LORA MODULES!!!")
+        print(lora_modules)
 
         output_size = 0
 
