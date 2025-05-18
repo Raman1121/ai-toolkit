@@ -66,8 +66,6 @@ class LoRAModule(ToolkitModuleMixin, ExtractableModuleMixin, torch.nn.Module):
         self.scalar = torch.tensor(1.0, device=org_module.weight.device)
         # check if parent has bias. if not force use_bias to False
         print(f"Original Module Name: {lora_name}")
-        print(f"Original Module: {org_module}")
-        print("\n")
         if org_module.bias is None:
             use_bias = False
 
