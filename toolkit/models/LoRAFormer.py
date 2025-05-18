@@ -162,6 +162,9 @@ class LoRAFormer(torch.nn.Module):
 
         lora_modules = self.sd_ref().network.get_all_modules()
 
+        print("LORA MODULES!!!")
+        print(lora_modules)
+
         output_size = 0
 
         self.embed_lengths = []
