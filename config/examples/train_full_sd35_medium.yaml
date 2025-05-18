@@ -8,7 +8,7 @@ config:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
       training_folder: "output"
-      device: cuda
+      device: cuda:0
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
