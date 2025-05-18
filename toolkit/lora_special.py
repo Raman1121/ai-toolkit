@@ -65,6 +65,9 @@ class LoRAModule(ToolkitModuleMixin, ExtractableModuleMixin, torch.nn.Module):
         self.orig_module_ref = weakref.ref(org_module)
         self.scalar = torch.tensor(1.0, device=org_module.weight.device)
         # check if parent has bias. if not force use_bias to False
+        print(f"Original Module Name: {lora_name}")
+        print(f"Original Module: {org_module}")
+        print("\n")
         if org_module.bias is None:
             use_bias = False
 
@@ -486,7 +489,6 @@ class LoRASpecialNetwork(ToolkitNetworkMixin, LoRANetwork):
             self.unet_loras = []
             skipped_un = []
         print(f"create LoRA for U-Net: {len(self.unet_loras)} modules.")
-        print(f"{self.unet_loras}")
 
         skipped = skipped_te + skipped_un
         if varbose and len(skipped) > 0:
