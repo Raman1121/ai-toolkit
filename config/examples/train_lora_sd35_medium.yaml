@@ -16,6 +16,10 @@ config:
         rank: 32
         linear: 32
         linear_alpha: 64 # Keeping alpha larger than rank increases the effect of LoRA
+        network_kwargs:
+          if_contains:
+            - "transformer.attn."
+            - "transformer.conv."
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
