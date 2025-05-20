@@ -19,8 +19,8 @@ config:
         network_kwargs:
           if_contains:
             - "transformer.attn."
-            - "transformer.proj."
-            - "transformer.pos_embed."
+            - "proj."
+            - "pos_embed."
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
