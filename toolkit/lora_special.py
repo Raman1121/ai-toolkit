@@ -422,7 +422,6 @@ class LoRASpecialNetwork(ToolkitNetworkMixin, LoRANetwork):
                                 **module_kwargs
                             )
                             loras.append(lora)
-                            print(lora)
                             if self.network_type.lower() == "lokr":
                                 try:
                                     lora_shape_dict[lora_name] = [list(lora.lokr_w1.weight.shape), list(lora.lokr_w2.weight.shape)]
