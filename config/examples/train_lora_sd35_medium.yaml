@@ -19,7 +19,7 @@ config:
         network_kwargs:
           if_contains:
             - "transformer.attn."
-            - "transformer.conv."
+            - "transformer.proj."
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
