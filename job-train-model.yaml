@@ -116,11 +116,11 @@ spec:
               # accelerate launch --num_processes=4 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3-5.txt 2>&1
               # accelerate launch --num_processes=4 run.py config/examples/train_lora_lumina.yaml > log_training_lumina.txt 2>&1
 
-              accelerate launch --deepspeed_config_file zero2.json --num_processes=5 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3_medium.txt 2>&1
+              accelerate launch --deepspeed_config_file zero2.json --num_processes=4 run.py config/examples/train_lora_sd35_medium.yaml > log_training_sd3_medium.txt 2>&1
               
           resources:
             limits:
-              nvidia.com/gpu: "5"
+              nvidia.com/gpu: "4"
               cpu: "8"
               memory: "128Gi"
           volumeMounts:
