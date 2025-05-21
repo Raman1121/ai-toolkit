@@ -7,19 +7,22 @@ config:
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
-      training_folder: "output"
+      training_folder: "new_output"
       # device: cuda:0
       device: cuda
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
         rank: 32
+        conv: 32
+        conv_alpha: 32
         linear: 32
         linear_alpha: 64 # Keeping alpha larger than rank increases the effect of LoRA
         network_kwargs:
           only_if_contains:
-            - "transformer.transformer_blocks.attn."
-            - "transformer.pos_embed.proj."
+            - "ff."
+            - "attn."
+            - "transformer.pos_embed.proj"
       save:
         dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
@@ -33,8 +36,8 @@ config:
           cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 1024 ] 
       train:
-        batch_size: 32
-        steps: 24000  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        batch_size: 48
+        steps: 19783  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples # 29,674 (5 A100s)
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # May not fully work with SD3 yet

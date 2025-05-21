@@ -355,14 +355,14 @@ class LoRASpecialNetwork(ToolkitNetworkMixin, LoRANetwork):
                                 if self.is_lumina2:
                                     if "layers$$" not in lora_name and "noise_refiner$$" not in lora_name and "context_refiner$$" not in lora_name:
                                         skip = True
-                                if  self.is_v3:
-                                    if "transformer_blocks" not in lora_name:
-                                        skip = True
+                                # if  self.is_v3:
+                                #     if "transformer_blocks" not in lora_name:
+                                #         skip = True
                                 
                                 # handle custom models
-                                if hasattr(root_module, 'transformer_blocks'):
-                                    if "transformer_blocks" not in lora_name:
-                                        skip = True
+                                # if hasattr(root_module, 'transformer_blocks'):
+                                #     if "transformer_blocks" not in lora_name:
+                                #         skip = True
                                         
                                 if hasattr(root_module, 'blocks'):
                                     if "blocks" not in lora_name:
