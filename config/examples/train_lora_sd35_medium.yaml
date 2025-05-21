@@ -36,8 +36,8 @@ config:
           cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 1024 ] 
       train:
-        batch_size: 48
-        steps: 19782  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples # 29,674 (5 A100s)
+        batch_size: 64
+        steps: 18546  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # May not fully work with SD3 yet
