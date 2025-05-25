@@ -7,24 +7,24 @@ config:
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
-      training_folder: "new_output"
+      training_folder: "output_r128"
       # device: cuda:0
       device: cuda
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
-        rank: 32
-        conv: 32
-        conv_alpha: 32
-        linear: 32
-        linear_alpha: 64 # Keeping alpha larger than rank increases the effect of LoRA
-        network_kwargs:
-          only_if_contains:
-            - "ff."
-            - "attn."
-            - "transformer.pos_embed.proj"
+        # rank: 32
+        # conv: 32
+        # conv_alpha: 32
+        linear: 128
+        linear_alpha: 128 # Keeping alpha larger than rank increases the effect of LoRA
+        # network_kwargs:
+        #   only_if_contains:
+        #     - "ff."
+        #     - "attn."
+        #     - "transformer.pos_embed.proj"
       save:
-        dtype: float16 # precision to save
+        dtype: bfloat # precision to save
         save_every: 1000 # save every this many steps
         max_step_saves_to_keep: 1 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
@@ -36,8 +36,8 @@ config:
           cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 1024 ] 
       train:
-        batch_size: 64
-        steps: 37092  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        batch_size: 32
+        steps: 29674  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # May not fully work with SD3 yet
