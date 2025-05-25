@@ -24,8 +24,8 @@ config:
         #     - "attn."
         #     - "transformer.pos_embed.proj"
       save:
-        dtype: bfloat # precision to save
-        save_every: 1000 # save every this many steps
+        dtype: float16 # precision to save
+        save_every: 500 # save every this many steps
         max_step_saves_to_keep: 1 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
       datasets:
