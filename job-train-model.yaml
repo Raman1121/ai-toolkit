@@ -125,7 +125,7 @@ spec:
           resources:
             limits:
               nvidia.com/gpu: "5"
-              cpu: "8"
+              cpu: "16"
               memory: "128Gi"
           volumeMounts:
             - name: workspace
@@ -142,7 +142,7 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
-            sizeLimit: 64Gi
+            sizeLimit: 256Gi
         - name: writeable
           persistentVolumeClaim:
             claimName: mimic-cxr2
