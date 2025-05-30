@@ -7,21 +7,20 @@ config:
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
-      training_folder: "output"
+      training_folder: "output_r128"
       # uncomment to see performance stats in the terminal every N steps
-      performance_log_every: 500
+      # performance_log_every: 500
       device: cuda
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
       # trigger_word: "p3r5on"
       network:
         type: "lora"
-        rank: 32
-        linear: 32
-        linear_alpha: 64 # Keeping alpha larger than rank increases the effect of LoRA
+        linear: 128
+        linear_alpha: 128
       save:
-        dtype: bf16 # precision to save
-        save_every: 1000 # save every this many steps
+        dtype: float16 # precision to save
+        save_every: 500 # save every this many steps
         max_step_saves_to_keep: 1 # how many intermittent saves to keep
         save_format: 'diffusers' # 'diffusers'
       datasets:
@@ -32,13 +31,13 @@ config:
           # cache_latents_to_disk: true  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # lumina2 enjoys multiple resolutions
       train:
-        batch_size: 16
+        batch_size: 32
 
         # can be 'sigmoid', 'linear', or 'lumina2_shift'
         timestep_type: 'lumina2_shift' 
         
-        steps: 28505  # total number of steps to train 500 - 4000 is a good range -> Corresponding to 15 epochs (approx)
-        gradient_accumulation: 2
+        steps: 29674  # total number of steps to train 500 - 4000 is a good range -> Corresponding to 15 epochs (approx)
+        gradient_accumulation: 1
         train_unet: true
         train_text_encoder: false  # probably won't work with lumina2
         gradient_checkpointing: true  # need the on unless you have a ton of vram
