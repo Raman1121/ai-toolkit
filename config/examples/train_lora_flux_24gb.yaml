@@ -6,22 +6,21 @@ config:
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
-      training_folder: "output"
+      training_folder: "output_r128"
       # uncomment to see performance stats in the terminal every N steps
-      performance_log_every: 1000
-      device: cuda:0
+      # performance_log_every: 1000
+      device: cuda
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
 #      trigger_word: "p3r5on"
       network:
         type: "lora"
-        rank: 32
-        linear: 32
-        linear_alpha: 64
+        linear: 128
+        linear_alpha: 128
       save:
-        dtype: bf16 # precision to save
+        dtype: float16 # precision to save
         save_every: 1000 # save every this many steps
-        max_step_saves_to_keep: 2 # how many intermittent saves to keep
+        max_step_saves_to_keep: 1 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
       datasets:
         - folder_path: "/pvc/MIMIC_ARRANGED/Train"
@@ -31,9 +30,9 @@ config:
           cache_latents_to_disk: false  # leave this true unless you know what you're doing
           resolution: [ 512, 768, 1024 ]  # flux enjoys multiple resolutions
       train:
-        batch_size: 16
-        steps: 28505  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
-        gradient_accumulation_steps: 2
+        batch_size: 32
+        steps: 29674  # (len(dataset) * epochs) / batch_size  -> We have 237388 samples
+        gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # probably won't work with flux
         gradient_checkpointing: true  # need the on unless you have a ton of vram
@@ -43,7 +42,7 @@ config:
         # uncomment this to skip the pre training sample
         skip_first_sample: true
         # uncomment to completely disable sampling
-        disable_sampling: true
+        # disable_sampling: true
         # uncomment to use new vell curved weighting. Experimental but may produce better results
 #        linear_timesteps: true
 
